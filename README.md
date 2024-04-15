@@ -5,6 +5,7 @@ Alif developer test
 The app receives event info via post request and creates notification for the user. Then, the job (worker) takes unsent
 notification list and prints them to terminal.
 
+- To run the app, write go run main.go command in command line
 - The app runs in localhost
 - The base url is http://localhost:8080/api/vi
 - The information about API is covered with swagger API
