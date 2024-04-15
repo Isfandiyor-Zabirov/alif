@@ -16,6 +16,10 @@ const (
 
 func CreateNotification(event Event) error {
 
+	if event.OrderType != PURCHASE && event.OrderType != VERIFY && event.OrderType != OTP {
+		return errors.New("wrong order type")
+	}
+
 	var exists bool
 	for _, existing := range notificationList {
 		if existing.ID == event.SessionID {
@@ -25,10 +29,12 @@ func CreateNotification(event Event) error {
 	}
 
 	if !exists {
+		log.Println("test")
 		dateFormat, err := time.Parse("2006-01-02 15:04:05 +15:04", event.EventDate)
+		log.Println("dateFormat:", dateFormat)
 		if err != nil {
 			log.Println("CreateNotification func parse time error:", err.Error())
-			return errors.New("Something went wrong ")
+			return errors.New("wrong date format")
 		}
 
 		formattedDate := dateFormat.Format("02.01.2006 15:04:05")
