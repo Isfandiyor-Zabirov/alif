@@ -1,0 +1,116 @@
+consumes:
+- application/json
+definitions:
+  notifications.Event:
+    properties:
+      card:
+        type: string
+      eventDate:
+        type: string
+      orderType:
+        type: string
+      sessionId:
+        type: string
+      websiteUrl:
+        type: string
+    type: object
+  notifications.Notification:
+    properties:
+      body:
+        type: string
+      id:
+        type: string
+      sent:
+        type: boolean
+      title:
+        type: string
+    type: object
+host: localhost
+info:
+  contact:
+    email: isfand.zabirov@gmail.com
+    name: Isfandiyor
+  description: Документация к сервису
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: API документация
+  version: 1.0.0
+paths:
+  /api/v1/notifications:
+    get:
+      operationId: get-notifications
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/notifications.Notification'
+            type: array
+        "400":
+          description: reason
+          schema:
+            type: string
+      summary: Getting all notification list
+      tags:
+      - Notifications
+    post:
+      operationId: create-notification
+      parameters:
+      - description: The type of operation. Can be Purchase, VerifyCard or SendOtp
+        in: body
+        name: orderType
+        required: true
+        schema:
+          type: string
+      - description: The session id of the operation
+        in: body
+        name: sessionId
+        required: true
+        schema:
+          type: string
+      - description: The card pan
+        in: body
+        name: card
+        required: true
+        schema:
+          type: string
+      - description: The date of the operation
+        in: body
+        name: eventDate
+        required: true
+        schema:
+          type: string
+      - description: The source of operation
+        in: body
+        name: websiteUrl
+        required: true
+        schema:
+          type: string
+      - description: Event data
+        in: body
+        name: model
+        schema:
+          $ref: '#/definitions/notifications.Event'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: message
+          schema:
+            type: string
+        "400":
+          description: reason
+          schema:
+            type: string
+      summary: Creating notification
+      tags:
+      - Notifications
+produces:
+- application/json
+schemes:
+- http
+swagger: "2.0"
